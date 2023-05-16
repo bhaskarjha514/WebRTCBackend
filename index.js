@@ -36,7 +36,7 @@ io.sockets.on('connection', function(socket) {
       log('Client ID ' + socket.id + ' created and joined room ' + room);
       socket.emit('created', room, socket.id);
 
-    } else if (numClients < 2) {
+    } else if (numClients >0) {
       // Joining an existing room
       socket.join(room);
       clientsInRoom.push(socket.id);
@@ -45,9 +45,6 @@ io.sockets.on('connection', function(socket) {
       io.sockets.in(room).emit('join', room);
       socket.emit('joined', room, socket.id);
       io.sockets.in(room).emit('ready');
-    } else {
-      // Room is full
-      socket.emit('full', room);
     }
   });
 
